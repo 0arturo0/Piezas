@@ -173,7 +173,7 @@ display:"flex",alignItems:"flex-end",
 }} onClick={onClose}>
 <div onClick={e=>e.stopPropagation()} style={{
 background:T.cardSolid,borderRadius:"20px 20px 0 0",
-width:"100%",maxWidth:430,margin:"0 auto",
+width:"100%",maxWidth:500,margin:"0 auto",
 paddingBottom:34,maxHeight:"85vh",overflowY:"auto",
 }}>
 <div style={{
@@ -310,7 +310,7 @@ const outT   = calcOutput(avgT, oee, hours);
 const ac     = activeStObj?.color ?? T.blue;
 
 return (
-  <div style={{paddingBottom:110}}>
+  <div className="view-container">
     {/* ── Big clock ── */}
     <div style={{
       background:T.cardSolid, margin:"16px 16px 0", borderRadius:22,
@@ -481,7 +481,7 @@ return (
 // ESTACIONES
 // ══════════════════════════════════════════════════════════════════════════
 const renderEstaciones = () => (
-<div style={{paddingBottom:110}}>
+<div className="view-container">
 {sortedLines.map((line,li)=>{
 const sts=stOf(line.id);
 return (
@@ -638,7 +638,7 @@ action="+ Estación" onAction={()=>{setSheetAddSt(line.id);setNewName("");}}/>
 // OEE
 // ══════════════════════════════════════════════════════════════════════════
 const renderOEE = () => (
-<div style={{paddingBottom:110}}>
+<div className="view-container">
 <SectionHeader title="Análisis por línea"/>
 <div style={{padding:"0 16px",fontSize:13,color:T.secondary,marginBottom:8}}>
 OEE y horas se configuran por línea. La salida usa el cuello de botella como limitante.
@@ -880,76 +880,67 @@ const TABS = [
 // RENDER
 // ══════════════════════════════════════════════════════════════════════════
 return (
-<div style={{
-background:T.bg, minHeight:"100vh", color:T.label,
-fontFamily:T.font, maxWidth:430, margin:"0 auto",
-position:"relative", overflowX:"hidden",
+<div className="app-layout" style={{
+background:T.bg, color:T.label, fontFamily:T.font
 }}>
-<style>{`*{box-sizing:border-box;-webkit-tap-highlight-color:transparent} ::-webkit-scrollbar{display:none} input[type=range]{-webkit-appearance:none;height:4px;border-radius:2px;background:${T.fill}} input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:11px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.18)} input[type=text]{font-family:${T.font}} @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}`}</style>
-
-  {/* ── Nav bar ── */}
-  <div style={{
-    position:"sticky",top:0,zIndex:100,
-    background:"rgba(242,242,247,0.88)",
-    backdropFilter:"blur(20px)",
-    WebkitBackdropFilter:"blur(20px)",
-    borderBottom:`1px solid ${T.separator}`,
-    padding:"14px 20px 10px",
-    display:"flex",alignItems:"center",justifyContent:"space-between",
-  }}>
-    <div style={{fontSize:22,fontWeight:700,color:T.label,letterSpacing:-0.5}}>
-      TimeTrack IE
-    </div>
-    <div style={{display:"flex",alignItems:"center",gap:8}}>
-      {activeStObj&&(
-        <span style={{
-          fontSize:13,fontWeight:500,
-          background:activeStObj.color,color:"#fff",
-          padding:"3px 10px",borderRadius:10,
-        }}>{activeStObj.name}</span>
-      )}
-      {running&&(
-        <div style={{
-          width:8,height:8,borderRadius:"50%",background:T.green,
-          boxShadow:`0 0 0 3px ${T.green}30`,
-          animation:"pulse 1.2s infinite",
-        }}/>
-      )}
-    </div>
-  </div>
-
-  {/* ── Scroll body ── */}
-  <div style={{overflowY:"auto",paddingTop:8}}>
-    {view==="Cronómetro"&&renderCrono()}
-    {view==="Estaciones"&&renderEstaciones()}
-    {view==="OEE"&&renderOEE()}
-  </div>
+<style>{`*{box-sizing:border-box;-webkit-tap-highlight-color:transparent} ::-webkit-scrollbar{display:none} input[type=range]{-webkit-appearance:none;height:4px;border-radius:2px;background:${T.fill}} input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:11px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.18)} input[type=text]{font-family:${T.font}} @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}} @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}`}</style>
 
   {/* ── Tab bar ── */}
-  <div style={{
-    position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",
-    width:"100%",maxWidth:430,
+  <div className="tab-bar-container" style={{
     background:"rgba(242,242,247,0.92)",
     backdropFilter:"blur(20px)",
     WebkitBackdropFilter:"blur(20px)",
     borderTop:`1px solid ${T.separator}`,
-    display:"flex",
-    paddingBottom:20,
-    zIndex:99,
   }}>
     {TABS.map(tab=>(
-      <button key={tab.id} onClick={()=>setView(tab.id)} style={{
-        flex:1,padding:"10px 0 4px",border:"none",background:"transparent",
-        display:"flex",flexDirection:"column",alignItems:"center",gap:3,
+      <button key={tab.id} className="tab-bar-btn" onClick={()=>setView(tab.id)} style={{
+        border:"none",background:"transparent",
         cursor:"pointer",fontFamily:T.font,
       }}>
-        <span style={{fontSize:22,filter:view===tab.id?"none":"grayscale(1) opacity(0.5)"}}>{tab.icon}</span>
-        <span style={{
-          fontSize:10,fontWeight:500,
+        <span className="tab-icon" style={{filter:view===tab.id?"none":"grayscale(1) opacity(0.5)"}}>{tab.icon}</span>
+        <span className="tab-label" style={{
+          fontWeight:500,
           color:view===tab.id?T.blue:T.secondary,
         }}>{tab.label}</span>
       </button>
     ))}
+  </div>
+
+  <div className="main-column">
+    {/* ── Nav bar ── */}
+    <div className="nav-bar-container" style={{
+      background:"rgba(242,242,247,0.88)",
+      backdropFilter:"blur(20px)",
+      WebkitBackdropFilter:"blur(20px)",
+      borderBottom:`1px solid ${T.separator}`,
+    }}>
+      <div style={{fontSize:22,fontWeight:700,color:T.label,letterSpacing:-0.5}}>
+        TimeTrack IE
+      </div>
+      <div style={{display:"flex",alignItems:"center",gap:8}}>
+        {activeStObj&&(
+          <span style={{
+            fontSize:13,fontWeight:500,
+            background:activeStObj.color,color:"#fff",
+            padding:"3px 10px",borderRadius:10,
+          }}>{activeStObj.name}</span>
+        )}
+        {running&&(
+          <div style={{
+            width:8,height:8,borderRadius:"50%",background:T.green,
+            boxShadow:`0 0 0 3px ${T.green}30`,
+            animation:"pulse 1.2s infinite",
+          }}/>
+        )}
+      </div>
+    </div>
+
+    {/* ── Scroll body ── */}
+    <div className="scroll-body-container">
+      {view==="Cronómetro"&&renderCrono()}
+      {view==="Estaciones"&&renderEstaciones()}
+      {view==="OEE"&&renderOEE()}
+    </div>
   </div>
 
   {/* ════ SHEETS ════ */}
@@ -1143,7 +1134,7 @@ position:"relative", overflowX:"hidden",
     )}
   </Sheet>
 
-  <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}`}</style>
+
 </div>
 );
 }

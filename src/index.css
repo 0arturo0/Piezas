@@ -1,11 +1,11 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #F2F2F7;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,56 +13,158 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+#root {
+  width: 100%;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+/* Base layouts (Mobile-first) */
+.app-layout {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  max-width: 430px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.main-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.nav-bar-container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 14px 20px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.scroll-body-container {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.view-container {
+  padding-bottom: 110px;
+}
+
+.tab-bar-container {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  display: flex;
+  padding-bottom: 20px;
+  z-index: 100;
+  justify-content: space-around;
+}
+
+.tab-bar-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 0 4px;
+  flex: 1;
+}
+
+.tab-icon {
+  font-size: 22px;
+}
+
+.tab-label {
+  font-size: 10px;
+}
+
+/* Adjust grid components to scale and look good */
+.responsive-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  padding: 0 16px;
+}
+
+@media (min-width: 768px) {
+  .app-layout {
+    max-width: 100%;
+    margin: 0;
+    flex-direction: row;
+    height: 100vh;
+    overflow: hidden;
   }
-  a:hover {
-    color: #747bff;
+  
+  .main-column {
+    flex: 1;
+    overflow-y: auto; /* To let entire right side scroll, or just body */
   }
-  button {
-    background-color: #f9f9f9;
+
+  .nav-bar-container {
+    width: 100%;
+  }
+  
+  .scroll-body-container {
+    padding-bottom: 40px;
+  }
+
+  .view-container {
+    padding-bottom: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .tab-bar-container {
+    position: static;
+    transform: none;
+    max-width: 260px;
+    width: 260px;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 40px;
+    border-top: none !important;
+    border-right: 1px solid rgba(60, 60, 67, 0.12);
+  }
+
+  .tab-bar-btn {
+    flex-direction: row;
+    padding: 16px 24px;
+    gap: 16px;
+    width: 100%;
+    border-radius: 12px;
+    margin: 4px 12px;
+    width: calc(100% - 24px);
+    flex: none;
+  }
+
+  .tab-bar-btn:hover {
+    background: rgba(120, 120, 128, 0.08) !important;
+  }
+
+  .tab-icon {
+    font-size: 24px;
+  }
+
+  .tab-label {
+    font-size: 16px;
+  }
+
+  /* Make items layout beautifully */
+  .responsive-grid {
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 20px;
   }
 }
